@@ -4,7 +4,7 @@ local util = require("lspconfig/util")
 
 completion.setup {
   enabled = true;
-  autocomplete = true;
+  autocomplete = false;
   debug = false;
   min_length = 1;
   preselect = 'enable';
@@ -20,13 +20,13 @@ completion.setup {
     path = true;
     buffer = true;
     calc = true;
-    vsnip = true;
+    -- vsnip = true;
     nvim_lsp = true;
     nvim_lua = true;
     spell = true;
     tags = true;
-    snippets_nvim = true;
-    treesitter = true;
+    -- snippets_nvim = true;
+    -- treesitter = true;
   };
 }
 

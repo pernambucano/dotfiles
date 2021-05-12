@@ -5,6 +5,12 @@ error_sign = 'E',
 warn_sign = 'W',
 hint_sign = 'H',
 infor_sign = 'I',
+code_action_prompt = {
+  enable = true,
+  sign = true,
+  sign_priority = 20,
+  virtual_text = false,
+},
 })
 
 -- code finder
@@ -17,13 +23,13 @@ vim.api.nvim_set_keymap('n', '<C-b>', "<cmd>lua require('lspsaga.hover').smart_s
 vim.api.nvim_set_keymap('n', '<leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<leader>ca', "<cmd>'<,'>lua require('lspsaga.codeaction').range_code_action()<CR>", {noremap = true, silent = true})
 -- signature help
-vim.api.nvim_set_keymap('n', '<leader>k', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<leader>k', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", {noremap = true, silent = true})
 -- rename
 -- vim.api.nvim_set_keymap('n', '<space>rn', "<cmd>lua require('lspsaga.rename').rename()<CR>", {noremap = true, silent = true})
 -- preview definition
 vim.api.nvim_set_keymap('n', '<leader>gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", {noremap = true, silent = true})
 -- diagnostics
-vim.api.nvim_set_keymap('n', '<leader>d', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<leader>d', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '[d', "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', ']d', "<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>", {noremap = true, silent = true})
 

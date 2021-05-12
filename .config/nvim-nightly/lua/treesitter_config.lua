@@ -14,23 +14,23 @@ tsconf.setup {
       ["foo.bar"] = "Identifier",
     },
   },
-  indent = {
-    enable = false
-  },
-  refactor = {
-    highlight_definitions = {
-      enable = true
-    }
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner"
-      }
-    }
-  }
+  -- indent = {
+  --   enable = false
+  -- },
+  -- refactor = {
+  --   highlight_definitions = {
+  --     enable = true
+  --   }
+  -- },
+  -- textobjects = {
+  --   select = {
+  --     enable = true,
+  --     keymaps = {
+  --       ["af"] = "@function.outer",
+  --       ["if"] = "@function.inner",
+  --       ["ac"] = "@class.outer",
+  --       ["ic"] = "@class.inner"
+  --     }
+  --   }
+  -- }
 }

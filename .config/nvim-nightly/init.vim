@@ -1,7 +1,7 @@
-set runtimepath-=~/.config/nvim
-set runtimepath-=~/.config/nvim/after
-set runtimepath-=~/.local/share/nvim/site
-set runtimepath-=~/.local/share/nvim/site/after
+" set runtimepath-=~/.config/nvim
+" set runtimepath-=~/.config/nvim/after
+" set runtimepath-=~/.local/share/nvim/site
+" set runtimepath-=~/.local/share/nvim/site/after
 
 set runtimepath+=~/.config/nvim-nightly/after
 set runtimepath^=~/.config/nvim-nightly
@@ -17,7 +17,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 Plug 'glepnir/lspsaga.nvim'
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
+Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 " Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
@@ -36,27 +37,55 @@ Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-unimpaired'
 Plug 'christoomey/vim-conflicted'
 Plug 'joukevandermaas/vim-ember-hbs'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 " let g:dracula_italic = 0
 " Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'sainnhe/forest-night'
-" Plug 'arcticicestudio/nord-vim'
+Plug 'sainnhe/everforest'
+Plug 'arcticicestudio/nord-vim'
 Plug 'mattn/emmet-vim'
 " Plug 'airblade/vim-gitgutter'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'lifepillar/vim-solarized8'
+" Plug 'ishan9299/nvim-solarized-lua'
 Plug 'unblevable/quick-scope'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
+" Plug 'glepnir/indent-guides.nvim'
+" Plug 'akinsho/nvim-bufferline.lua'
+Plug 'yamatsum/nvim-web-nonicons'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'GlennLeo/cobalt2'
+Plug 'Rigellute/rigel'
+Plug 'tpope/vim-abolish'
+Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+Plug 'junegunn/goyo.vim'
+Plug 'ishan9299/nvim-solarized-lua'
+" Plug 'mortepau/codicons.nvim'
+Plug 'folke/tokyonight.nvim'
+Plug 'hoob3rt/lualine.nvim'
+Plug 'folke/tokyonight.nvim'
 call plug#end()
 
-lua require('basic_config')
 
 syntax enable " enable syntax highlight
 set termguicolors
-set background=dark
-colorscheme forest-night
+set background=light
+
+function! s:patch_colorscheme_after_goyo()
+  highlight IndentBlanklineGreen guifg=#98971a gui=nocombine
+  highlight IndentBlanklineYellow guifg=#d79921 gui=nocombine
+  highlight IndentBlanklineBlue guifg=#458588 gui=nocombine
+  highlight IndentBlanklinePurple guifg=#b16286 gui=nocombine
+  highlight IndentBlanklineBrightBlue guibg=#0088ff gui=nocombine
+  highlight IndentBlanklineBrightGreen guifg=#ffffff guibg=#a6e22e gui=nocombine
+  highlight IndentBlanklineWhite guifg=#ffffff gui=nocombine
+  highlight IndentBlanklineBege guifg=#fef4da gui=nocombine
+endfunction
+
+autocmd! ColorScheme solarized call s:patch_colorscheme_after_goyo()
+
+colorscheme tokyonight
 set fileencoding=utf-8                  " The encoding written to file
 set noshowmode
 set showcmd " show incomplete commands
@@ -87,9 +116,9 @@ set shortmess+=c
 """"""""""""""""""""
 " Code Management
 """"""""""""""""""""
-" set foldmethod=indent "" fold based on indentation
-" set foldlevel=99
-" set nofoldenable      "" don't open a file with folds, display the whole thing
+set foldmethod=indent "" fold based on indentation
+set foldlevel=99
+set nofoldenable      "" don't open a file with folds, display the whole thing
 set signcolumn=yes    "" always show the signcolumn
 
 
@@ -112,11 +141,17 @@ augroup myfiletypes
 augroup END
 
 
+lua require('basic_config')
+lua require('lualine_config')
+
+
+let test#custom_runners = {'javascript': ['Ember']}
+
 let test#strategy = "vtr"
-let test#enabled_runners = ["ruby#rspec"]
+let test#enabled_runners = ["ruby#rspec", "javascript#ember"]
 let test#ruby#rspec#executable = 'docker-compose exec -e RAILS_ENV=test api bundle exec rspec'
 
-set stl+=%{ConflictedVersion()}
+" set stl+=%{ConflictedVersion()}
 
 nnoremap <Leader>gs :Gstatus<CR>
  
@@ -125,7 +160,7 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> [B :blast<CR>
 
-nnoremap <silent> <expr> <C-n> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
+" nnoremap <silent> <expr> <C-n> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -170,22 +205,23 @@ nmap ,cs :let @*=expand("%")<CR>
 " copies full filepath into clipboard
 nmap ,cl :let @*=expand("%:p")<CR> 
 
-let g:lightline = {
-      \ 'colorscheme': 'forest_night',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch'],
-      \             [ 'filename'],
-      \             ['gitversion']],
-      \ },
-      \ 'inactive': {
-      \   'left': [ [ 'gitversion' ] ],
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'gitversion': 'ConflictedVersion',
-      \ }
-      \ }
+" let g:everforest_enable_italic = 1
+" let g:lightline = {
+"       \ 'colorscheme': 'solarized',
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ],
+"       \             [ 'gitbranch'],
+"       \             [ 'filename'],
+"       \             ['gitversion']],
+"       \ },
+"       \ 'inactive': {
+"       \   'left': [ [ 'gitversion' ] ],
+"       \ },
+"       \ 'component_function': {
+"       \   'gitbranch': 'FugitiveHead',
+"       \   'gitversion': 'ConflictedVersion',
+"       \ }
+"       \ }
 
 
 ""search for all files
@@ -273,9 +309,9 @@ let g:lightline = {
 
 nnoremap <leader>gs :Gstatus<CR>
 
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable      " don't open a file with folds, display the whole thing
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+" set nofoldenable      " don't open a file with folds, display the whole thing
 
 lua require('lsp_config')
 lua require('treesitter_config')
@@ -301,3 +337,98 @@ inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+let g:nvim_tree_side = 'left'
+" let g:nvim_tree_width = 40 "30 by default
+let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+let g:nvim_tree_auto_open = 0 "0 by default, opens the tree when typing `vim $DIR` or `vim`
+let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
+" let g:nvim_tree_auto_ignore_ft = {'startify', 'dashboard'} "empty by default, don't auto open tree on specific filetypes.
+" let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
+let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
+let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+" let gnvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
+let g:nvim_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
+let g:nvim_tree_width_allow_resize  = 0 "0 by default, will not resize the tree when opening a file
+let g:nvim_tree_disable_netrw = 0 "1 by default, disables netrw
+let g:nvim_tree_hijack_netrw = 0 "1 by default, prevents netrw from automatically opening when opening directories (but lets you keep its other utilities)
+let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 1,
+    \ 'files': 1,
+    \ }
+
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   },
+    \   'lsp': {
+    \     'hint': "",
+    \     'info': "",
+    \     'warning': "",
+    \     'error': "",
+    \   }
+    \ }
+"If 0, do not show the icons for one of 'git' 'folder' and 'files'
+"1 by default, notice that if 'files' is 1, it will only display
+"if nvim-web-devicons is installed and on your runtimepath
+
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
+" NvimTreeOpen and NvimTreeClose are also available if you need them
+
+" set termguicolors " this variable must be enabled for colors to be applied properly
+
+" a list of groups can be found at `:help nvim_tree_highlight`
+" highlight NvimTreeFolderIcon guibg=blue:
+
+set list
+
+let g:indent_blankline_use_treesitter = v:true
+let g:indent_blankline_filetype_exclude = ['help','dashboard','dashpreview','NvimTree','coc-explorer','startify','vista','sagahover']
+
+highlight IndentBlanklineGreen guifg=#9ece6a gui=nocombine
+highlight IndentBlanklineYellow guifg=#d79921 gui=nocombine
+highlight IndentBlanklineBlue guifg=#458588 gui=nocombine
+highlight IndentBlanklinePurple guifg=#b16286 gui=nocombine
+highlight IndentBlanklineBrightBlue guibg=#0088ff gui=nocombine
+highlight IndentBlanklineBrightGreen guifg=#ffffff guibg=#a6e22e gui=nocombine
+highlight IndentBlanklineWhite guifg=#ffffff gui=nocombine
+highlight IndentBlanklineBege guifg=#fef4da gui=nocombine
+
+" let g:indent_blankline_char_highlight_list = ['IndentBlanklineGreen', 'IndentBlanklineBlue', 'IndentBlanklinePurple']
+let g:indent_blankline_context_highlight_list = [ 'IndentBlanklineGreen']
+
+let g:indent_blankline_show_current_context = v:true
+
+let g:indent_blankline_context_patterns = ['class', 'function', 'method', '^if', 'while', 'for', 'with', 'func_literal', 'block']
+let g:indent_blankline_show_trailing_blankline_indent = v:false
+
+" Goyo
+let g:goyo_width = 120
+let g:goyo_height = 90
+
+noremap <silent> <leader><CR> :Goyo<CR>
+
+let g:tokyonight_italic_functions = v:true
+let g:tokyonight_italic_variables = v:true
