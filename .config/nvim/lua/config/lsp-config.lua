@@ -1,34 +1,13 @@
+vim.cmd('highlight LspDiagnosticsUnderlineError guisp=#db4b4b gui=undercurl,bold  cterm=bold,undercurl')
+
+-- lsp diagnostic signs
+vim.fn.sign_define('LspDiagnosticsSignError', {text = '', texthl = 'LspDiagnosticsSignError', linehl = '', numhl = ''})
+vim.fn.sign_define('LspDiagnosticsSignWarning', {text = '', texthl = 'LspDiagnosticsSignWarning', linehl = '', numhl = ''})
+vim.fn.sign_define('LspDiagnosticsSignInformation', {text = '', texthl = 'LspDiagnosticsSignInformation', linehl = '', numhl = ''})
+vim.fn.sign_define('LspDiagnosticsSignHint', {text = '', texthl = 'LspDiagnosticsSignHint', linehl = '', numhl = ''})
+
+-- lsp setup
 local lsp = require('lspconfig')
-local completion = require('compe')
-local util = require("lspconfig/util")
-
-completion.setup {
-  enabled = true;
-  autocomplete = false;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    -- vsnip = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = true;
-    -- snippets_nvim = true;
-    -- treesitter = true;
-  };
-}
 
 local function eslint_config_exists()
   local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
@@ -59,8 +38,8 @@ local set_lsp_config = function(client, bufnr)
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  -- buf_set_keymap('n', '<leader>s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   -- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   -- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   -- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -80,38 +59,29 @@ local set_lsp_config = function(client, bufnr)
     buf_set_keymap("n", "<leader>df", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   end
 
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-    hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-    hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-    hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-    augroup lsp_document_highlight
-    autocmd! * <buffer>
-    autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    augroup END
-    ]], false)
-  end
-
-
+  -- -- Set autocommands conditional on server_capabilities
+  -- if client.resolved_capabilities.document_highlight then
+  --   vim.api.nvim_exec([[
+  --   hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+  --   hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+  --   hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+  --   augroup lsp_document_highlight
+  --   autocmd! * <buffer>
+  --   autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+  --   autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+  --   augroup END
+  --   ]], false)
+  -- end
 end
 
--- ESLINT Server
 local eslint = {
-  lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
+  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
   lintStdin = true,
-  lintFormats = {"%f(%l,%c): %trror %m", "%f(%l,%c): %tarning %m"},
+  lintFormats = {"%f:%l:%c: %m"},
   lintIgnoreExitCode = true,
   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
   formatStdin = true
 }
-
-local prettier = {
-  formatCommand = "./node_modules/.bin/prettier --stdin-filepath=${INPUT}",
-  formatStdin = true
-}
-
 
 -- Servers With Custom Overrides
 lsp.tsserver.setup{
@@ -121,11 +91,9 @@ lsp.tsserver.setup{
   end
 } 
 
--- Custom EFM just for ESLINT
-lsp.efm.setup{
-  init_options = {
-    documentFormatting = true,
-  },
+lsp.efm.setup {
+  init_options = {documentFormatting = true},
+  filetypes = {"javascript", "typescript"},
   on_attach = function(client, bufnr)
     set_lsp_config(client, bufnr)
   end,
@@ -136,30 +104,60 @@ lsp.efm.setup{
     return vim.fn.getcwd()
   end,
   settings = {
+    rootMarkers = {".eslintrc.js", ".git/"},
     languages = {
-      javascript = {prettier, eslint},
-      javascriptreact = {prettier, eslint},
-      ["javascript.jsx"] = {prettier, eslint},
-      typescript = {prettier, eslint},
-      ["typescript.tsx"] = {prettier, eslint},
-      typescriptreact = {prettier, eslint},
-      yaml = {prettier},
-      json = {prettier},
-      html = {prettier},
-      scss = {prettier},
-      css = {prettier},
-      markdown = {prettier},
+      javascript = {eslint},
+      typescript = {eslint}
     }
-  },
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescript.tsx",
-    "typescriptreact"
-  },
+  }
 }
+
+-- local prettier = {
+--   formatCommand = "./node_modules/.bin/prettier --stdin-filepath=${INPUT}",
+--   formatStdin = true
+-- }
+
+
+
+-- -- Custom EFM just for ESLINT
+-- lsp.efm.setup{
+--   init_options = {
+--     documentFormatting = true,
+--   },
+--   on_attach = function(client, bufnr)
+--     set_lsp_config(client, bufnr)
+--   end,
+--   root_dir = function()
+--     if not eslint_config_exists() then
+--       return nil
+--     end
+--     return vim.fn.getcwd()
+--   end,
+--   settings = {
+--     languages = {
+--       javascript = {eslint},
+--       -- javascriptreact = {eslint},
+--       -- ["javascript.jsx"] = {prettier, eslint},
+--       typescript = {eslint},
+--       -- ["typescript.tsx"] = {prettier, eslint},
+--       -- typescriptreact = {prettier, eslint},
+--       -- yaml = {prettier},
+--       -- json = {prettier},
+--       -- html = {prettier},
+--       -- scss = {prettier},
+--       -- css = {prettier},
+--       -- markdown = {prettier},
+--     }
+--   },
+--   filetypes = {
+--     "javascript",
+--     -- "javascriptreact",
+--     -- "javascript.jsx",
+--     "typescript",
+--     -- "typescript.tsx",
+--     -- "typescriptreact"
+--   },
+-- }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -168,8 +166,3 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       underline = true
     }
   )
-
-vim.fn.sign_define("LspDiagnosticsSignError", {text = "E", numhl = "LspDiagnosticsDefaultError"})
-vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "W", numhl = "LspDiagnosticsDefaultWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", numhl = "LspDiagnosticsDefaultInformation"})
-vim.fn.sign_define("LspDiagnosticsSignHint", {text = "H", numhl = "LspDiagnosticsDefaultHint"})

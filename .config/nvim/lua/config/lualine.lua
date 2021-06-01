@@ -5,7 +5,7 @@ end
  
 require('lualine').setup{
   options = {
-    theme = 'tokyonight',
+    theme = 'oceanicnext',
     section_separators = {'', ''},
     component_separators = {'', ''},
     icons_enabled = true,

@@ -9,9 +9,7 @@ function! test#javascript#ember#test_file(file) abort
 endfunction
 
 if !exists('g:test#javascript#ember#file_pattern')
-  echo "here"
   let g:test#javascript#ember#file_pattern = '\vtests?/.*\.(js)$'
-  echo g:test#javascript#ember#file_pattern
 endif
 
 if !exists('g:test#javascript#ember#config_module')
@@ -33,7 +31,7 @@ function! s:nearest_module(position) abort
     \],
   \}
   let name = test#base#nearest_test(a:position, l:patterns)
-  return join(name['namespace'])
+  return join(name['namespace'], ' > ')
 endfunction
 
 function! test#javascript#ember#build_position(type, position) abort
@@ -42,10 +40,13 @@ function! test#javascript#ember#build_position(type, position) abort
   let args = []
 
   if a:type ==# 'nearest'
-    if !empty(name)
-      call add(args, '--filter='.shellescape(name, 1))
+    if !empty(name) && !empty(module)
+      let nearest_test_name = join([module, name], ': ')
+      call add(args, '--filter='.shellescape(nearest_test_name, 1))
     elseif !empty(module)
-      call add(args, '--filter='.shellescape(module, 1))
+      call add(args, '--module='.shellescape(module, 1))
+    elseif !empty(name)
+      call add(args, '--filter='.shellescape(name, 1))
     endif
   elseif a:type ==# 'file'
     if !empty(module)
