@@ -26,6 +26,7 @@ return {
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
+			{ "nvim-telescope/telescope-project.nvim" },
 
 			-- Useful for getting pretty icons, but requires special font.
 			--  If you already have a Nerd Font, or terminal set up with fallback fonts
@@ -53,6 +54,7 @@ return {
 			-- do as well as how to actually do it!
 
 			local telescope_actions = require("telescope.actions")
+			local project_actions = require("telescope._extensions.project.actions")
 			local custom_picker = {
 				hidden = true,
 				theme = "ivy",
@@ -75,6 +77,17 @@ return {
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_ivy(),
+					},
+					project = {
+						base_dirs = {
+							vim.fn.expand(vim.env.BASE_DIR_PROJECT),
+						},
+						hidden_files = true, -- default: false
+						theme = "ivy",
+						on_project_selected = function(prompt_bufnr)
+							-- Do anything you want in here. For example:
+							project_actions.change_working_directory(prompt_bufnr, false)
+						end,
 					},
 				},
 
@@ -115,6 +128,7 @@ return {
 			-- Enable telescope extensions, if they are installed
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
+			pcall(require("telescope").load_extension("project"))
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")

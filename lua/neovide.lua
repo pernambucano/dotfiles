@@ -1,7 +1,7 @@
 if vim.g.neovide ~= nil then
 	vim.g.gui_font_default_size = 15
 	vim.g.gui_font_size = vim.g.gui_font_default_size
-	vim.g.gui_font_face = "JetBrains Mono"
+	vim.g.gui_font_face = "IBM Plex Mono"
 	vim.g.neovide_floating_shadow = false
 	vim.g.neovide_scroll_animation_length = 0.1
 
