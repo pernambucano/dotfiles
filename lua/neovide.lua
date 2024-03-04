@@ -3,7 +3,7 @@ if vim.g.neovide ~= nil then
 	vim.g.gui_font_size = vim.g.gui_font_default_size
 	vim.g.gui_font_face = "IBM Plex Mono"
 	vim.g.neovide_floating_shadow = false
-	vim.g.neovide_scroll_animation_length = 0.1
+	vim.g.neovide_scroll_animation_length = 0
 
 	RefreshGuiFont = function()
 		vim.opt.guifont = string.format("%s:h%s", vim.g.gui_font_face, vim.g.gui_font_size)
