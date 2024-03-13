@@ -2,6 +2,10 @@ return {
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+    dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			"RRethy/nvim-treesitter-endwise", -- add "end" in Ruby and other languages
+    },
 		config = function()
 			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 

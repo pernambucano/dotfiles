@@ -156,12 +156,11 @@ return {
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[S]earch [N]eovim files" })
 
-			vim.keymap.set("n", "<C-p>", "<cmd>lua require'utils'.project_files()<cr>")
+			vim.keymap.set("n", "<C-p>", "<cmd>lua require'utils'.project_files()<cr>", { desc = "Open files"})
 			vim.keymap.set(
 				"n",
 				"<leader>fl",
-				"<cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir() })<CR>"
-			)
+				"<cmd>lua require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir() })<CR>", {desc = "Open files in current cwd"})
 			vim.keymap.set("n", "<leader><leader>", ':lua require("telescope.builtin").buffers()<CR>')
 			vim.keymap.set("n", "<leader>fg", ':lua require("telescope.builtin").live_grep()<CR>')
 			vim.keymap.set("n", "<leader>fb", ':lua require("telescope.builtin").git_branches()<CR>')
@@ -171,7 +170,7 @@ return {
 			vim.keymap.set("n", "<leader>ft", ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>')
 			vim.keymap.set("n", "<leader>fh", ':lua require("telescope.builtin").help_tags({ previewer = false })<CR>')
 			vim.keymap.set("n", "<leader>fa", "<cmd>lua vim.lsp.buf.code_action()<cr>")
-			vim.keymap.set("n", "<leader>fo", ':lua require("telescope.builtin").resume()<CR>')
+			vim.keymap.set("n", "<leader>fo", ':lua require("telescope.builtin").resume()<CR>', { desc = "Resume search" })
 			vim.keymap.set(
 				"n",
 				"<leader>fp",

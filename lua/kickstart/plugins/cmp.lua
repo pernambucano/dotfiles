@@ -54,7 +54,7 @@ local function format(_, item)
 	end
 
 	-- Replace kind with icons.
-	item.kind = " " .. (icons.kinds[item.kind] or icons.Unknown) .. "│"
+	item.kind = " " .. (icons.kinds[item.kind] or icons.Unknown) .. " │"
 
 	-- Remove gibberish.
 	item.menu = nil
@@ -108,20 +108,20 @@ return {
 				},
 				completion = { completeopt = "menu,menuone,noinsert" },
 
-				window = {
-					completion = cmp.config.window.bordered({
-						col_offset = -3,
-						scrollbar = true,
-						side_padding = 0,
-						winhighlight = "Normal:Normal,FloatBorder:NvimFloat,CursorLine:Visual,Search:None,CmpItemAbbrMatch:Statement",
-					}),
-
-					documentation = cmp.config.window.bordered({
-						winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
-						-- winhighlight = 'Normal:Pmenu,FloatBorder:SpecialCmpBorder,CursorLine:PmenuSel,Search:None',
-						scrollbar = true,
-					}),
-				},
+				-- window = {
+				-- 	completion = cmp.config.window.bordered({
+				-- 		col_offset = -3,
+				-- 		scrollbar = true,
+				-- 		side_padding = 0,
+				-- 		winhighlight = "Normal:Normal,FloatBorder:NvimFloat,CursorLine:Visual,Search:None,CmpItemAbbrMatch:Statement",
+				-- 	}),
+				--
+				-- 	documentation = cmp.config.window.bordered({
+				-- 		winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+				-- 		-- winhighlight = 'Normal:Pmenu,FloatBorder:SpecialCmpBorder,CursorLine:PmenuSel,Search:None',
+				-- 		scrollbar = true,
+				-- 	}),
+				-- },
 				view = {
 					entries = { name = "custom", selection_order = "near_cursor" },
 				},

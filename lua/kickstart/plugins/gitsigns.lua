@@ -4,17 +4,20 @@
 --
 -- See `:help gitsigns` to understand what the configuration keys do
 return {
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
+  -- { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  --   'lewis6991/gitsigns.nvim',
+  --   opts = {
+  --     signs = {
+  --       add = { text = '+' },
+  --       change = { text = '~' },
+  --       delete = { text = '_' },
+  --       topdelete = { text = '‾' },
+  --       changedelete = { text = '~' },
+  --     },
+  --     signcolumn = false,  -- Toggle with `:Gitsigns toggle_signs`
+  --     numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
+  --     linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  --   },
+  -- },
 }
 -- vim: ts=2 sts=2 sw=2 et

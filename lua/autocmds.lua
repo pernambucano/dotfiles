@@ -36,3 +36,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		end
 	end,
 })
+
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+	pattern = "*.hbs",
+	group = "_general",
+	callback = function()
+		vim.cmd.setfiletype('handlebars')
+	end
+})

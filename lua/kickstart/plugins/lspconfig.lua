@@ -1,3 +1,4 @@
+-- LSP Diagnostics Options Setup
 return {
 	{ -- LSP Configuration & Plugins
 		"neovim/nvim-lspconfig",
@@ -99,6 +100,15 @@ return {
 					--  For example, in C this would take you to the header
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
+          map("[d", require("delimited").goto_prev, "Go to previous diagnostic")
+          map("]d", require("delimited").goto_next, "Go to next diagnostic")
+          map("[D", function()
+            require("delimited").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+          end, "Go to previous error")
+          map("]D", function()
+            require("delimited").goto_next({ severity = vim.diagnostic.severity.ERROR })
+          end, "Go to next error")
+
 					-- The following two autocommands are used to highlight references of the
 					-- word under your cursor when your cursor rests there for a little while.
 					--    See `:help CursorHold` for information about when this is executed
@@ -149,33 +159,39 @@ return {
 				-- tsserver = {},
 				--
 
-				lua_ls = {
-					-- cmd = {...},
-					-- filetypes { ...},
-					-- capabilities = {},
-					settings = {
-						Lua = {
-							runtime = { version = "LuaJIT" },
-							workspace = {
-								checkThirdParty = false,
-								-- Tells lua_ls where to find all the Lua files that you have loaded
-								-- for your neovim configuration.
-								library = {
-									"${3rd}/luv/library",
-									unpack(vim.api.nvim_get_runtime_file("", true)),
-								},
-								-- If lua_ls is really slow on your computer, you can try this instead:
-								-- library = { vim.env.VIMRUNTIME },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-							-- diagnostics = { disable = { 'missing-fields' } },
-						},
-					},
-				},
+				-- lua_ls = {
+				-- 	-- cmd = {...},
+				-- 	-- filetypes { ...},
+				-- 	-- capabilities = {},
+				-- 	settings = {
+				-- 		Lua = {
+				-- 			runtime = { version = "LuaJIT" },
+				-- 			workspace = {
+				-- 				checkThirdParty = false,
+				-- 				-- Tells lua_ls where to find all the Lua files that you have loaded
+				-- 				-- for your neovim configuration.
+				-- 				library = {
+				-- 					"${3rd}/luv/library",
+				-- 					unpack(vim.api.nvim_get_runtime_file("", true)),
+				-- 				},
+				-- 				-- If lua_ls is really slow on your computer, you can try this instead:
+				-- 				-- library = { vim.env.VIMRUNTIME },
+				-- 			},
+				-- 			completion = {
+				-- 				callSnippet = "Replace",
+				-- 			},
+				-- 			-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+				-- 			-- diagnostics = { disable = { 'missing-fields' } },
+				-- 		},
+				-- 	},
+				-- },
 			}
+
+      -- TODO: Could we use mason for this?
+      require("lspconfig").rubocop.setup({
+        cmd = { "/Users/paulofernandes/.rbenv/shims/rubocop", "--lsp" },
+        capabilities = capabilities,
+      })
 
 			-- Ensure the servers and tools above are installed
 			--  To check the current status of installed tools and/or manually install
@@ -205,6 +221,30 @@ return {
 					end,
 				},
 			})
+
+      vim.diagnostic.config({
+        underline = false,
+        virtual_text = false,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+          },
+          numhl = {
+            [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+            [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+            [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+            [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+          }
+        },
+        float = {
+          header = "",
+          max_width = math.min(math.floor(vim.o.columns * 0.7), 100),
+          max_height = math.min(math.floor(vim.o.lines * 0.3), 30),
+        },
+      })
 		end,
 	},
 }

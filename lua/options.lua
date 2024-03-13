@@ -4,10 +4,10 @@
 --  For more options, you can see `:help option-list`
 
 -- Make line numbers default
-vim.opt.number = true
--- You can also add relative line numbers, for help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.number = false
+
+-- Don't show searched items with highlight
+vim.opt.hlsearch = false
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -31,7 +31,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'yes:2'
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -50,10 +50,45 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
+-- Start with all folds open
+vim.o.foldlevelstart = 99
+
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Don't show statusline
+vim.opt.laststatus = 0
+
+-- Don't show cmd by default
+vim.opt.cmdheight = 1
+
+-- Vim Test Config
+-- TODO: move to its own file
+vim.cmd([[
+let g:test#enabled_runners = ["ruby#rspec"]
+let g:test#ruby#rspec#executable = "docker-compose exec -i -w /usr/src/app api bin/rspec "
+let test#strategy = {
+  \ 'nearest': 'basic',
+\}
+]])
+
+-- Wrap big lines
+vim.opt.wrap = true
+
+-- Go to previous/next line with h,j
+vim.opt.whichwrap:append("<>[]hl")
+
+-- Remap for dealing with word wrap
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Use spaces instead of tab
+vim.opt.expandtab = true
+
+-- # of spaces used for >>, <<
+vim.opt.shiftwidth = 2
 
 -- vim: ts=2 sts=2 sw=2 et

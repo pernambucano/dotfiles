@@ -20,10 +20,10 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 vim.keymap.set("t", "<C-[>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -92,10 +92,6 @@ vim.keymap.set("n", "<leader>dl", "3gt", { desc = "Go to the third tab" })
 vim.keymap.set("n", "<leader>d;", "4gt", { desc = "Go to the fourth tab" })
 
 -- plugins keymaps
-
--- HOP
-vim.keymap.set("n", "s", "<cmd>HopWord<cr>")
-vim.keymap.set("n", "<leader>s", "<cmd>HopLineStart<cr>")
 
 -- DAP
 vim.keymap.set("n", "<F5>", "<Cmd>lua require'dap'.continue()<CR>")
