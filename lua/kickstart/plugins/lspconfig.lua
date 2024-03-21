@@ -100,14 +100,18 @@ return {
 					--  For example, in C this would take you to the header
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
-          map("[d", require("delimited").goto_prev, "Go to previous diagnostic")
-          map("]d", require("delimited").goto_next, "Go to next diagnostic")
-          map("[D", function()
-            require("delimited").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-          end, "Go to previous error")
-          map("]D", function()
-            require("delimited").goto_next({ severity = vim.diagnostic.severity.ERROR })
-          end, "Go to next error")
+
+          map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
+          map("]d", vim.diagnostic.goto_next, "Go to next diagnostic")
+
+          -- map("[d", require("delimited").goto_prev, "Go to previous diagnostic")
+          -- map("]d", require("delimited").goto_next, "Go to next diagnostic")
+          -- map("[D", function()
+          --   require("delimited").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+          -- end, "Go to previous error")
+          -- map("]D", function()
+          --   require("delimited").goto_next({ severity = vim.diagnostic.severity.ERROR })
+          -- end, "Go to next error")
 
 					-- The following two autocommands are used to highlight references of the
 					-- word under your cursor when your cursor rests there for a little while.

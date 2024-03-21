@@ -22,7 +22,7 @@ if vim.g.neovide ~= nil then
 	vim.g.neovide_cursor_animate_in_insert_mode = true
 	vim.opt.guicursor = "i:ver30-Cursor-blinkwait300-blinkon300-blinkoff300"
 
-	vim.g.neovide_padding_top = 20
+	-- vim.g.neovide_padding_top = 20
 	-- vim.g.neovide_padding_bottom = 20
 	-- vim.g.neovide_padding_right = 0
 	-- vim.g.neovide_padding_left = 0

@@ -167,10 +167,10 @@ return {
 			vim.keymap.set("n", "<leader>fc", ':lua require("telescope.builtin").git_bcommits()<CR>')
 			vim.keymap.set("n", "<leader>fs", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
 			vim.keymap.set("n", "<leader>fw", ':lua require("telescope.builtin").grep_string()<CR>')
-			vim.keymap.set("n", "<leader>ft", ':lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>')
+			vim.keymap.set("n", "<leader>fo", ':lua require("telescope.builtin").oldfiles()<CR>')
 			vim.keymap.set("n", "<leader>fh", ':lua require("telescope.builtin").help_tags({ previewer = false })<CR>')
 			vim.keymap.set("n", "<leader>fa", "<cmd>lua vim.lsp.buf.code_action()<cr>")
-			vim.keymap.set("n", "<leader>fo", ':lua require("telescope.builtin").resume()<CR>', { desc = "Resume search" })
+			vim.keymap.set("n", "<leader>fr", ':lua require("telescope.builtin").resume()<CR>', { desc = "Resume search" })
 			vim.keymap.set(
 				"n",
 				"<leader>fp",

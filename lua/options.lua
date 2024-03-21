@@ -54,26 +54,16 @@ vim.opt.inccommand = 'split'
 vim.o.foldlevelstart = 99
 
 -- Show which line your cursor is on
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
 -- Don't show statusline
-vim.opt.laststatus = 0
+vim.opt.laststatus = 3
 
 -- Don't show cmd by default
-vim.opt.cmdheight = 1
-
--- Vim Test Config
--- TODO: move to its own file
-vim.cmd([[
-let g:test#enabled_runners = ["ruby#rspec"]
-let g:test#ruby#rspec#executable = "docker-compose exec -i -w /usr/src/app api bin/rspec "
-let test#strategy = {
-  \ 'nearest': 'basic',
-\}
-]])
+vim.opt.cmdheight = 0
 
 -- Wrap big lines
 vim.opt.wrap = true
