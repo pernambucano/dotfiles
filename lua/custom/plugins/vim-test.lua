@@ -22,7 +22,6 @@ return {
 			-- vim.g['test#neovim#term_position'] = 'vert'
 			vim.g['test#enabled_runners'] = {"ruby#rspec", "javascript#jest"}
 			vim.g['test#ruby#rspec#executable'] = "docker-compose exec -i -w /usr/src/app api bin/rspec "
-			-- vim.g['test#javascript#jest#executable'] = "yarn test"
 			vim.g['test#javascript#jest#runner'] = "jest"
 			-- vim.g["test#javascript#jest#options"] = "--testRegex=\"(/tests/.*|(\\.|/)(test|spec|integration))\\.[jt]sx?$\""
 			-- vim.g['test#javascript#jest#file_pattern']= ".*"

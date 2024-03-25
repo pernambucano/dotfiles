@@ -31,7 +31,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes:2'
+-- vim.opt.signcolumn = 'yes:2'
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -81,4 +81,5 @@ vim.opt.expandtab = true
 -- # of spaces used for >>, <<
 vim.opt.shiftwidth = 2
 
+vim.opt.fillchars = { eob = "~" }
 -- vim: ts=2 sts=2 sw=2 et

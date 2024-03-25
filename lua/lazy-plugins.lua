@@ -7,7 +7,22 @@
 --
 --  To update plugins, you can run
 --    :Lazy update
---
+local opts = {
+  install = {
+    missing = true,
+  },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "netrwPlugin",
+      },
+    },
+  },
+}
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).

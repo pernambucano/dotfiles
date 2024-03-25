@@ -14,7 +14,6 @@ return {
       vim.g.zenwritten_lighten_noncurrent_window = true
       vim.g.zenwritten_solid_float_border = false
       vim.g.zenwritten_solid_vert_split = false
-      vim.g.zenwritten_lightness = "bright"
 
 			vim.cmd.colorscheme("zenwritten")
 		end,
