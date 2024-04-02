@@ -37,7 +37,7 @@ return {
           if is_virtual_line() then
             return string.rep(" ", #lnum)
           elseif is_wrapped_line() then
-            return " " .. string.rep(" ", #lnum)
+            return "" .. string.rep(" ", #lnum)
           else
             return (#lnum == 1 and "  " or " ") .. lnum
           end
@@ -52,7 +52,7 @@ return {
         if is_wrapped_line() or is_virtual_line() then
           return ""
         elseif not_in_fold_range() or not_fold_start(vim.v.lnum) then
-          return "  "
+          return " "
         elseif fold_opened() then
           return utils.icons.misc.expanded
         else
@@ -80,30 +80,30 @@ return {
     }
 
     local Border = {
-      init = function(self)
-        local ns_id = vim.api.nvim_get_namespaces()["gitsigns_extmark_signs_"]
-        if ns_id then
-          local marks = vim.api.nvim_buf_get_extmarks(
-            0,
-            ns_id,
-            { vim.v.lnum - 1, 0 },
-            { vim.v.lnum, 0 },
-            { limit = 1, details = true }
-          )
-
-          if #marks > 0 then
-            local hl_group = marks[1][4]["sign_hl_group"]
-            self.highlight = hl_group
-          else
-            self.highlight = nil
-          end
-        end
-      end,
-      provider = utils.icons.misc.v_border,
-      -- hl = function(self)
-      --   return self.highlight or "StatusColumnBorder"
+      -- init = function(self)
+      --   local ns_id = vim.api.nvim_get_namespaces()["gitsigns_extmark_signs_"]
+      --   if ns_id then
+      --     local marks = vim.api.nvim_buf_get_extmarks(
+      --       0,
+      --       ns_id,
+      --       { vim.v.lnum - 1, 0 },
+      --       { vim.v.lnum, 0 },
+      --       { limit = 1, details = true }
+      --     )
+      --
+      --     if #marks > 0 then
+      --       local hl_group = marks[1][4]["sign_hl_group"]
+      --       self.highlight = hl_group
+      --     else
+      --       self.highlight = nil
+      --     end
+      --   end
       -- end,
-      hl = "CursorLine"
+      provider = utils.icons.misc.v_border,
+      hl = function(self)
+        return self.highlight or "StatusColumnBorder"
+      end,
+      -- hl = "CursorLine"
     }
 
     local Padding = {
@@ -119,9 +119,29 @@ return {
       -- end,
     }
 
+    local TerminalStatusColumn = {
+      condition = function ()
+        return conditions.buffer_matches({
+          buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
+          filetype = { "^git.*", "fugitive" },
+        })
+      end,
+
+      Padding
+    }
+
+    local NormalStatusColumn = {
+      Number, Fold, Border, Padding
+    }
+
+    local StatusColumn = {
+      fallthrough = false,
+
+      TerminalStatusColumn, NormalStatusColumn
+    }
+
     require("heirline").setup({
-      statusline = {},
-      statuscolumn = { Number, Fold, Border, Padding }
+      statuscolumn = StatusColumn,
     })
   end
 }

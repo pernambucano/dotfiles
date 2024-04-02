@@ -157,9 +157,9 @@ M.icons = {
 		conflict             = " ",
 	},
 	misc                   = {
-		collapsed            = "▶ ",
-		expanded             = "▼ ",
-		current              = "▼ ",
+		collapsed            = "▶",
+		expanded             = "▼",
+		current              = "▼",
 		folder_empty         = "",
 		folder_closed        = "",
 		folder_open          = "",
