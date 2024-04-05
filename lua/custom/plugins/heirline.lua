@@ -6,7 +6,6 @@ return {
   event = "UiEnter",
   config = function()
     local conditions = require("heirline.conditions")
-    local palette = require "zenwritten.palette"
     local utils = require"utils"
 
     local function is_virtual_line()
