@@ -130,7 +130,7 @@ return {
     }
 
     local NormalStatusColumn = {
-      Number, Fold, Border, Padding
+      Number, Fold, Padding
     }
 
     local StatusColumn = {

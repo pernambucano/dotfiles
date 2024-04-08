@@ -63,7 +63,7 @@ vim.opt.scrolloff = 10
 vim.opt.laststatus = 3
 
 -- Don't show cmd by default
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = 1
 
 -- Wrap big lines
 vim.opt.wrap = true
@@ -84,5 +84,7 @@ vim.opt.shiftwidth = 2
 vim.opt.fillchars = { eob = "~" }
 
 vim.opt.guicursor = { 'n-v-c:block,i-ci-ve:hor10' }
+
+vim.cmd([[colorscheme jellybeans-nvim]])
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -21,7 +21,7 @@ return {
       vim.g.zenwritten_solid_float_border = false
       vim.g.zenwritten_solid_vert_split = false
 
-      vim.cmd.colorscheme("zenbones")
+      -- vim.cmd.colorscheme("zenbones")
     end,
   },
 }
