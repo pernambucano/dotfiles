@@ -1,12 +1,9 @@
 return {
   "rebelot/heirline.nvim",
-  -- You can optionally lazy-load heirline on UiEnter
-
-  -- to make sure all required plugins and colorschemes are loaded before setup
   event = "UiEnter",
   config = function()
     local conditions = require("heirline.conditions")
-    local utils = require"utils"
+    local utils = require "utils"
 
     local function is_virtual_line()
       return vim.v.virtnum < 0
@@ -43,7 +40,7 @@ return {
         end,
         hl = "CursorLine"
       },
-      { provider = " ", hl = "CursorLine" },
+      { provider = " ",  hl = "CursorLine" },
     }
 
     local Fold = {
@@ -119,7 +116,7 @@ return {
     }
 
     local TerminalStatusColumn = {
-      condition = function ()
+      condition = function()
         return conditions.buffer_matches({
           buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
           filetype = { "^git.*", "fugitive" },
@@ -136,11 +133,13 @@ return {
     local StatusColumn = {
       fallthrough = false,
 
-      TerminalStatusColumn, NormalStatusColumn
+      TerminalStatusColumn,
+      NormalStatusColumn
     }
 
     require("heirline").setup({
       statuscolumn = StatusColumn,
+      winbar = require'kickstart.heirline.winbar',
     })
   end
 }

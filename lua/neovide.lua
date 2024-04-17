@@ -59,7 +59,10 @@ vim.g.neovide_transparency = 1.0
 vim.g.neovide_no_idle = true        -- Default false
 vim.g.neovide_input_use_logo = true -- Default false
 vim.g.neovide_input_macos_alt_is_meta = true
-vim.g.neovide_padding_top = 10
+vim.g.neovide_padding_top = 0
+vim.g.neovide_padding_left = 0
+vim.g.neovide_padding_right = 0
+vim.g.neovide_padding_bottom = 0
 vim.opt.linespace = 3
 
 -- Cursor

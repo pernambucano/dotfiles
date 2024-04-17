@@ -60,7 +60,7 @@ vim.opt.cursorline = false
 vim.opt.scrolloff = 10
 
 -- Don't show statusline
-vim.opt.laststatus = 3
+vim.opt.laststatus = 0
 
 -- Don't show cmd by default
 vim.opt.cmdheight = 1

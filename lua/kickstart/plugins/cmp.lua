@@ -108,20 +108,20 @@ return {
 
         window = {
           completion = {
-            border = 'rounded',
+            border = 'single',
             winhighlight = winhighlight,
             scrollbar = true,
           },
           documentation = {
-            border = 'rounded',
+            border = 'single',
             winhighlight = winhighlight,
             max_height = math.floor(vim.o.lines * 0.5),
             max_width = math.floor(vim.o.columns * 0.4),
           },
         },
         view = {
-          entries = { name = "custom", selection_order = "near_cursor" },
-          -- entries = { follow_cursor = true },
+          -- entries = { name = "custom", selection_order = "near_cursor" },
+          entries = { follow_cursor = true },
         },
 
         experimental = {

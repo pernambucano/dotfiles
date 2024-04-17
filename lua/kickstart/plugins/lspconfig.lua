@@ -276,7 +276,7 @@ return {
           }
         },
         float = {
-          border = 'rounded',
+          border = 'single',
           source = 'if_many',
           -- Show severity icons as prefixes.
           prefix = function(diag)
