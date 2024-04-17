@@ -3,13 +3,17 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-	{"https://github.com/stevearc/dressing.nvim"},
+	{ "https://github.com/stevearc/dressing.nvim" },
 	-- Git related plugins
-	{ "tpope/vim-fugitive",         cmd = { "Git", "Gdiff", "G" } }, -- Git commands in nvim
-	{ "sindrets/diffview.nvim",     dependencies = { "nvim-lua/plenary.nvim" } },
+	{ "tpope/vim-fugitive",                       cmd = { "Git", "Gdiff", "G" } }, -- Git commands in nvim
+	{ "sindrets/diffview.nvim",                   dependencies = { "nvim-lua/plenary.nvim" } },
 	-- Test related plugins
 	{ 'nvim-tree/nvim-web-devicons' },
-	{'ahmedkhalf/project.nvim', config = function ()
-		require'project_nvim'.setup()
-	end}
+	{
+		'ahmedkhalf/project.nvim',
+		config = function()
+			require 'project_nvim'.setup()
+		end
+	},
+	{ 'RRethy/base16-nvim' },
 }

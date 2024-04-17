@@ -99,6 +99,9 @@ return {
           live_grep = custom_picker,
           oldfiles = custom_picker,
           find_files = custom_picker,
+          colorscheme = {
+            enable_preview = true
+          }
         },
 
         defaults = {

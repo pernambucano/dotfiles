@@ -74,3 +74,8 @@ vim.api.nvim_create_user_command("ChangeBufferName", function()
 	end)
 	vim.cmd("keepalt file " .. new_name)
 end, { desc = "Change Buffer Name" })
+
+
+vim.api.nvim_create_user_command("ShowStash", function()
+	vim.cmd("DiffviewFileHistory -g --range=stash")
+end, { desc = "Show Stash" })

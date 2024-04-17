@@ -5,12 +5,6 @@
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
--- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -41,11 +35,11 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 
 -- Open file navigator
@@ -59,10 +53,10 @@ vim.keymap.set("n", "<leader>k", ":m .-2<CR>==", { desc = "move line down" })
 vim.keymap.set("n", "<leader>j", ":m .+1<CR>==", { desc = "move line up" })
 vim.keymap.set("n", "<C-c>", "<Esc>", { desc = "Cancel action" })
 vim.keymap.set(
-	"n",
-	"c<Tab>",
-	":let @/=expand('<cword>')<CR>cgn",
-	{ desc = "Change current word and save it for later" }
+  "n",
+  "c<Tab>",
+  ":let @/=expand('<cword>')<CR>cgn",
+  { desc = "Change current word and save it for later" }
 )
 vim.keymap.set("n", "<leader>[", ":set paste<CR>m`O<Esc>``:set nopaste<CR>", { desc = "Add one line up" })
 vim.keymap.set("n", "<leader>]", ":set paste<CR>m`o<Esc>``:set nopaste<CR>", { desc = "Add one lne down" })
@@ -76,10 +70,10 @@ vim.keymap.set("n", "<leader>l", ":noh<CR>", { desc = "Clear searched highlight"
 vim.keymap.set("n", "n", "nzz", { desc = "Center file when searching forward" })
 vim.keymap.set("n", "N", "Nzz", { desc = "Center file when searching backward" })
 vim.keymap.set(
-	"n",
-	"<leader>cd",
-	"<cmd>args `rg --files-with-matches debugger | rg --type ruby --files-with-matches byebug app/` | argdo :g/debugger/d | argdo :g/byebug/d | update<CR>",
-	{ desc = "Remove debugger from ruby files" }
+  "n",
+  "<leader>cd",
+  "<cmd>args `rg --files-with-matches debugger | rg --type ruby --files-with-matches byebug app/` | argdo :g/debugger/d | argdo :g/byebug/d | update<CR>",
+  { desc = "Remove debugger from ruby files" }
 )
 
 vim.keymap.set("n", "<leader>ff", ":Format<CR>", { desc = "Format file" })
@@ -108,21 +102,27 @@ vim.keymap.set("n", "t<C-l>", ":TestLast<CR>")
 vim.keymap.set("n", "t<C-g>", ":TestVisit<CR>")
 vim.keymap.set("n", "t<C-t>", ":TestParallel<CR>")
 
--- Harpoon
-vim.keymap.set("n", "<leader>hh", ':lua require("harpoon.mark").add_file()<CR>')
-vim.keymap.set("n", "<leader>hp", ':lua require("harpoon.ui").toggle_quick_menu()<CR>')
-vim.keymap.set("n", "<leader>ha", ':lua require("harpoon.ui").nav_file(1)<CR>')
-vim.keymap.set("n", "<leader>hs", ':lua require("harpoon.ui").nav_file(2)<CR>')
-vim.keymap.set("n", "<leader>hd", ':lua require("harpoon.ui").nav_file(3)<CR>')
-vim.keymap.set("n", "<leader>hf", ':lua require("harpoon.ui").nav_file(4)<CR>')
-
 -- Increment/decrement
 vim.keymap.set("n", "+", "<C-a>")
 vim.keymap.set("n", "-", "<C-x>")
 
 -- Terminal
-vim.keymap.set({ "n" }, "<leader>tl", ":vsp | :term<CR>")
-vim.keymap.set({ "n" }, "<leader>tj", ":sp | :term<CR>")
-vim.keymap.set({ "n" }, "<leader>tt", ":tabnew | :term<CR>")
+vim.keymap.set("n", "<leader>tl", ":vsp | :term<CR>")
+vim.keymap.set("n", "<leader>tj", ":sp | :term<CR>")
+vim.keymap.set("n", "<leader>tt", ":tabnew | :term<CR>")
+
+
+-- Refactoring
+vim.keymap.set("x", "<leader>re", ":Refactor extract ")
+vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ")
+
+vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
+
+vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
+
+vim.keymap.set( "n", "<leader>rI", ":Refactor inline_func")
+
+vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
+vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
 
 -- vim: ts=2 sts=2 sw=2 et

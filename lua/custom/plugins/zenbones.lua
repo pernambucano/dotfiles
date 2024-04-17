@@ -7,8 +7,6 @@ return {
       "rktjmp/lush.nvim",
     },
     config = function()
-      vim.opt.background = "light"
-
       vim.g.zenbones_colorize_diagnostic_underline_text = true
       vim.g.zenbones_transparent_background = false
       vim.g.zenbones_lighten_noncurrent_window = true
@@ -21,7 +19,16 @@ return {
       vim.g.zenwritten_solid_float_border = false
       vim.g.zenwritten_solid_vert_split = false
 
-      -- vim.cmd.colorscheme("zenbones")
+      vim.opt.background = "light"
+      vim.cmd.colorscheme("zenbones")
+
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        pattern = "zenbones",
+        callback = function()
+          vim.api.nvim_set_hl(0, 'NormalFloat', { link = "Normal" })
+        end,
+        desc = "Override Zenbones",
+      })
     end,
   },
 }

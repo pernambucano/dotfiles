@@ -11,17 +11,17 @@ return {
 				-- details about support_filetypes and exclude_filetypes in https://github.com/shellRaining/hlchunk.nvim/blob/main/lua/hlchunk/utils/filetype.lua
 				support_filetypes = { "*.ts", "*.js", "*.rb" },
 				chars = {
-					horizontal_line = "┄",
-					vertical_line = "┆",
+					-- horizontal_line = "┄",
+					-- vertical_line = "┆",
+					horizontal_line = "─",
+					vertical_line = "│",
 					left_top = "╭",
 					left_bottom = "╰",
 					right_arrow = ">",
 				},
 				style = {
-					-- { fg = palette.light.blossom.hex},
-					-- { fg = palette.light.wood.hex }, -- this fg is used to highlight wrong chunk
-					{fg = "#8BC1AA"},
-					{fg = "#CF694A"}
+					{ fg = palette.light.blossom.hex},
+					{ fg = palette.light.wood.hex }, -- this fg is used to highlight wrong chunk
 				},
 				textobject = "",
 				max_file_size = 1024 * 1024,

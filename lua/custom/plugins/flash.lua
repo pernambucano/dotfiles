@@ -1,18 +1,18 @@
 return {
-	"folke/flash.nvim",
-	event = "VeryLazy",
-	---@type Flash.Config
-	opts = {},
+  "folke/flash.nvim",
+  event = "VeryLazy",
+  ---@type Flash.Config
+  opts = {},
   -- stylua: ignore
   keys = {
-    { "<cr>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    -- { "<cr>", mode = { "n", "x", "o" }, function() hopLikeHOP() end, desc = "Flash" },
     -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
     -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
   },
-  config = function ()
-    require'flash'.setup{
+  config = function()
+    require 'flash'.setup {
       -- labels = "abcdefghijklmnopqrstuvwxyz",
       labels = "asdfghjklqwertyuiopzxcvbnm",
       search = {
@@ -169,14 +169,14 @@ return {
           config = function(opts)
             -- autohide flash when in operator-pending mode
             opts.autohide = opts.autohide or (vim.fn.mode(true):find("no") and vim.v.operator == "y")
-    
+
             -- disable jump labels when not enabled, when using a count,
             -- or when recording/executing registers
             opts.jump_labels = opts.jump_labels
-              and vim.v.count == 0
-              and vim.fn.reg_executing() == ""
-              and vim.fn.reg_recording() == ""
-    
+                and vim.v.count == 0
+                and vim.fn.reg_executing() == ""
+                and vim.fn.reg_recording() == ""
+
             -- Show jump labels only in operator-pending mode
             -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
           end,
@@ -245,8 +245,8 @@ return {
           relative = "editor",
           width = 1, -- when <=1 it's a percentage of the editor width
           height = 1,
-          row = -1, -- when negative it's an offset from the bottom
-          col = 0, -- when negative it's an offset from the right
+          row = -1,  -- when negative it's an offset from the bottom
+          col = 0,   -- when negative it's an offset from the right
           zindex = 1000,
         },
       },
@@ -262,5 +262,51 @@ return {
         motion = false,
       },
     }
+
+    local Flash = require("flash")
+
+    ---@param opts Flash.Format
+    local function format(opts)
+      -- always show first and second label
+      return {
+        { opts.match.label1, "FlashMatch" },
+        { opts.match.label2, "FlashLabel" },
+      }
+    end
+
+    vim.keymap.set({ "n", "x", "o" }, "<CR>", function()
+      Flash.jump({
+        search = { mode = "search" },
+        label = { after = false, before = { 0, 0 }, uppercase = false, format = format },
+        pattern = [[\<]],
+        action = function(match, state)
+          state:hide()
+          Flash.jump({
+            search = { max_length = 0 },
+            highlight = { matches = false },
+            label = { format = format },
+            matcher = function(win)
+              -- limit matches to the current label
+              return vim.tbl_filter(function(m)
+                return m.label == match.label and m.win == win
+              end, state.results)
+            end,
+            labeler = function(matches)
+              for _, m in ipairs(matches) do
+                m.label = m.label2 -- use the second label
+              end
+            end,
+          })
+        end,
+        labeler = function(matches, state)
+          local labels = state:labels()
+          for m, match in ipairs(matches) do
+            match.label1 = labels[math.floor((m - 1) / #labels) + 1]
+            match.label2 = labels[(m - 1) % #labels + 1]
+            match.label = match.label1
+          end
+        end,
+      })
+    end)
   end
 }

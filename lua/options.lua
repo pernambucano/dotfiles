@@ -85,6 +85,4 @@ vim.opt.fillchars = { eob = "~" }
 
 vim.opt.guicursor = { 'n-v-c:block,i-ci-ve:hor10' }
 
-vim.cmd([[colorscheme jellybeans-nvim]])
-
 -- vim: ts=2 sts=2 sw=2 et
