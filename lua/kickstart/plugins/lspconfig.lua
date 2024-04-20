@@ -82,14 +82,14 @@ return {
         map("]d", vim.diagnostic.goto_next, "Go to next diagnostic")
         map("<leader>e", vim.diagnostic.open_float, "Show diagnostic [E]rror messages")
         map("<leader>q", vim.diagnostic.setloclist, "Open diagnostic [Q]uickfix list")
-        map("[e", function()
-            vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }
-          end,
-          "Go to previous error")
-        map("e]", function()
-            vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }
-          end,
-          "Go to next error")
+        -- map("[e", function()
+        --     vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }
+        --   end,
+        --   "Go to previous error")
+        -- map("e]", function()
+        --     vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }
+        --   end,
+        --   "Go to next error")
 
         if client.supports_method(methods.textDocument_signatureHelp) then
           imap('<C-k>', function()
@@ -113,7 +113,7 @@ return {
 
           vim.api.nvim_create_autocmd('InsertEnter', {
             group = inlay_hints_group,
-            desc = 'Enable inlay hints',
+            desc = 'Disable inlay hints',
             buffer = bufnr,
             callback = function()
               vim.lsp.inlay_hint.enable(bufnr, false)
@@ -121,7 +121,7 @@ return {
           })
           vim.api.nvim_create_autocmd('InsertLeave', {
             group = inlay_hints_group,
-            desc = 'Disable inlay hints',
+            desc = 'Enable inlay hints',
             buffer = bufnr,
             callback = function()
               vim.lsp.inlay_hint.enable(bufnr, true)
@@ -330,7 +330,7 @@ return {
             result,
             ctx,
             vim.tbl_deep_extend('force', config or {}, {
-              border = 'rounded',
+              border = 'single',
               focusable = focusable,
               max_height = math.floor(vim.o.lines * 0.5),
               max_width = math.floor(vim.o.columns * 0.4),

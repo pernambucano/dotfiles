@@ -51,7 +51,6 @@ vim.keymap.set("n", "<leader>cf", ':let @*=expand("%")<CR>', { desc = "copy file
 vim.keymap.set("n", "<leader>cp", ':let @*=expand("%:p")<CR>', { desc = "copy filepath" })
 vim.keymap.set("n", "<leader>k", ":m .-2<CR>==", { desc = "move line down" })
 vim.keymap.set("n", "<leader>j", ":m .+1<CR>==", { desc = "move line up" })
-vim.keymap.set("n", "<C-c>", "<Esc>", { desc = "Cancel action" })
 vim.keymap.set(
   "n",
   "c<Tab>",
