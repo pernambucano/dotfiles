@@ -2,7 +2,9 @@ return {
 	"shellRaining/hlchunk.nvim",
 	event = { "UIEnter" },
 	config = function()
-		local palette = require "zenbones.palette"
+		-- local palette = require "zenbones.palette"
+		local normal_colors = vim.api.nvim_get_hl_by_name("Normal", true)
+		local normal_fg = string.format('#%06x', normal_colors.foreground)
 		require("hlchunk").setup({
 			chunk = {
 				enable = true,
@@ -20,8 +22,8 @@ return {
 					right_arrow = ">",
 				},
 				style = {
-					{ fg = palette.light.blossom.hex},
-					{ fg = palette.light.wood.hex }, -- this fg is used to highlight wrong chunk
+					{ fg = normal_fg },
+					{ fg = "#00ff00" }, -- this fg is used to ighlight wrong chunk
 				},
 				textobject = "",
 				max_file_size = 1024 * 1024,

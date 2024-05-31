@@ -103,31 +103,31 @@ return {
           end, 'Signature help')
         end
 
-        if client.supports_method(methods.textDocument_inlayHint) then
-          local inlay_hints_group = vim.api.nvim_create_augroup('toggle_inlay_hints', { clear = false })
-
-          vim.defer_fn(function()
-            local mode = vim.api.nvim_get_mode().mode
-            vim.lsp.inlay_hint.enable(bufnr, mode == 'n' or mode == 'v')
-          end, 500)
-
-          vim.api.nvim_create_autocmd('InsertEnter', {
-            group = inlay_hints_group,
-            desc = 'Disable inlay hints',
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.inlay_hint.enable(bufnr, false)
-            end,
-          })
-          vim.api.nvim_create_autocmd('InsertLeave', {
-            group = inlay_hints_group,
-            desc = 'Enable inlay hints',
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.inlay_hint.enable(bufnr, true)
-            end,
-          })
-        end
+        -- if client.supports_method(methods.textDocument_inlayHint) then
+        --   local inlay_hints_group = vim.api.nvim_create_augroup('toggle_inlay_hints', { clear = false })
+        --
+        --   vim.defer_fn(function()
+        --     local mode = vim.api.nvim_get_mode().mode
+        --     vim.lsp.inlay_hint.enable(bufnr, mode == 'n' or mode == 'v')
+        --   end, 500)
+        --
+        --   vim.api.nvim_create_autocmd('InsertEnter', {
+        --     group = inlay_hints_group,
+        --     desc = 'Disable inlay hints',
+        --     buffer = bufnr,
+        --     callback = function()
+        --       vim.lsp.inlay_hint.enable(bufnr, false)
+        --     end,
+        --   })
+        --   vim.api.nvim_create_autocmd('InsertLeave', {
+        --     group = inlay_hints_group,
+        --     desc = 'Enable inlay hints',
+        --     buffer = bufnr,
+        --     callback = function()
+        --       vim.lsp.inlay_hint.enable(bufnr, true)
+        --     end,
+        --   })
+        -- end
 
         -- The following two autocommands are used to highlight references of the
         -- word under your cursor when your cursor rests there for a little while.
@@ -230,9 +230,9 @@ return {
       --   capabilities = capabilities,
       -- })
 
-      require("lspconfig").ruby_ls.setup({
+      require("lspconfig").ruby_lsp.setup({
         capabilities = capabilities,
-        cmd = { "/Users/paulofernandes/.rbenv/shims/ruby-lsp" }
+        cmd = { vim.fn.expandcmd("~/.rbenv/shims/ruby-lsp") }
       })
 
       -- Ensure the servers and tools above are installed
@@ -355,22 +355,22 @@ return {
 
       -- Workaround for truncating long TypeScript inlay hints.
       -- TODO: Remove this if https://github.com/neovim/neovim/issues/27240 gets addressed.
-      local inlay_hint_handler = vim.lsp.handlers[methods.textDocument_inlayHint]
-      vim.lsp.handlers[methods.textDocument_inlayHint] = function(err, result, ctx, config)
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        if client and client.name == 'typescript-tools' then
-          result = vim.iter.map(function(hint)
-            local label = hint.label ---@type string
-            if label:len() >= 30 then
-              label = label:sub(1, 29) .. require'utils'.icons.misc.ellipsis
-            end
-            hint.label = label
-            return hint
-          end, result)
-        end
-
-        inlay_hint_handler(err, result, ctx, config)
-      end
+      -- local inlay_hint_handler = vim.lsp.handlers[methods.textDocument_inlayHint]
+      -- vim.lsp.handlers[methods.textDocument_inlayHint] = function(err, result, ctx, config)
+      --   local client = vim.lsp.get_client_by_id(ctx.client_id)
+      --   if client and client.name == 'typescript-tools' then
+      --     result = vim.iter.map(function(hint)
+      --       local label = hint.label ---@type string
+      --       if label:len() >= 30 then
+      --         label = label:sub(1, 29) .. require'utils'.icons.misc.ellipsis
+      --       end
+      --       hint.label = label
+      --       return hint
+      --     end, result)
+      --   end
+      --
+      --   inlay_hint_handler(err, result, ctx, config)
+      -- end
 
       -- Update mappings when registering dynamic capabilities.
       local register_capability = vim.lsp.handlers[methods.client_registerCapability]

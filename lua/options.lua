@@ -57,7 +57,7 @@ vim.o.foldlevelstart = 99
 vim.opt.cursorline = false
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 3
 
 -- Don't show statusline
 vim.opt.laststatus = 0
@@ -71,8 +71,7 @@ vim.opt.wrap = true
 -- Go to previous/next line with h,j
 vim.opt.whichwrap:append("<>[]hl")
 
--- Remap for dealing with word wrap
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+-- R "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Use spaces instead of tab

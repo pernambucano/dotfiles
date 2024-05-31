@@ -19,8 +19,8 @@ return {
       vim.g.zenwritten_solid_float_border = false
       vim.g.zenwritten_solid_vert_split = false
 
-      vim.opt.background = "light"
-      vim.cmd.colorscheme("zenbones")
+      -- vim.opt.background = "light"
+      -- vim.cmd.colorscheme("zenbones")
 
       vim.api.nvim_create_autocmd("ColorScheme", {
         pattern = "zenbones",
