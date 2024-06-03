@@ -1,3 +1,4 @@
+local icons = require "icons"
 -- Heavily based on https://github.com/MariaSolOs/dotfiles. Thank you, Maria!
 
 -- LSP Diagnostics Options Setup
@@ -224,12 +225,6 @@ return {
         -- },
       }
 
-      -- TODO: Could we use mason for this?
-      -- require("lspconfig").rubocop.setup({
-      --   cmd = { "/Users/paulofernandes/.rbenv/shims/rubocop", "--lsp" },
-      --   capabilities = capabilities,
-      -- })
-
       require("lspconfig").ruby_lsp.setup({
         capabilities = capabilities,
         cmd = { vim.fn.expandcmd("~/.rbenv/shims/ruby-lsp") }
@@ -268,11 +263,20 @@ return {
         underline = true,
         virtual_text = false,
         signs = {
-          numhl = {
-            [vim.diagnostic.severity.ERROR] = "DiagnosticError",
-            [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
-            [vim.diagnostic.severity.HINT] = "DiagnosticHint",
-            [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+          -- numhl = {
+          --   [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+          --   [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+          --   [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+          --   [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+          -- }
+          text = {
+            [vim.diagnostic.severity.ERROR] = icons.misc.vertical_bar_thick,
+            [vim.diagnostic.severity.WARN] = icons.misc.vertical_bar_thick,
+            [vim.diagnostic.severity.HINT] = icons.misc.vertical_bar_thick,
+            [vim.diagnostic.severity.INFO] = icons.misc.vertical_bar_thick,
+          },
+          linehl = {
+            [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
           }
         },
         float = {

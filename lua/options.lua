@@ -31,7 +31,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = 'no'
+vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -83,5 +83,4 @@ vim.opt.shiftwidth = 2
 vim.opt.fillchars = { eob = "~" }
 
 vim.opt.guicursor = { 'n-v-c:block,i-ci-ve:hor10' }
-
 -- vim: ts=2 sts=2 sw=2 et

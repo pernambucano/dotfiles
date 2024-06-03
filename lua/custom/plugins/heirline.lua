@@ -137,17 +137,17 @@ return {
       NormalStatusColumn
     }
 
-    require("heirline").setup({
-      statuscolumn = StatusColumn,
-      -- winbar = require'kickstart.heirline.winbar',
-      -- opts = {
-      --   disable_winbar_cb = function (args)
-      --     return conditions.buffer_matches({
-      --       buftype = { "nofile", "prompt", "help", "quickfix" },
-      --       filetype = { "^git.*", "fugitive", "Trouble", "dashboard", "Telescope" },
-      --     }, args.buf)
-      --   end
-      -- }
-    })
+    -- require("heirline").setup({
+    --   -- statuscolumn = StatusColumn,
+    --   -- winbar = require'kickstart.heirline.winbar',
+    --   -- opts = {
+    --   --   disable_winbar_cb = function (args)
+    --   --     return conditions.buffer_matches({
+    --   --       buftype = { "nofile", "prompt", "help", "quickfix" },
+    --   --       filetype = { "^git.*", "fugitive", "Trouble", "dashboard", "Telescope" },
+    --   --     }, args.buf)
+    --   --   end
+    --   -- }
+    -- })
   end
 }

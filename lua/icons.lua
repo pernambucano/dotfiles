@@ -2,10 +2,10 @@ local M = {}
 
 --- Diagnostic severities.
 M.diagnostics = {
-    ERROR = '',
-    WARN = '',
-    HINT = '',
-    INFO = '',
+    ERROR = '┃',
+    WARN = '┃',
+    HINT = '┃',
+    INFO = '┃',
 }
 
 --- For folding.
@@ -52,6 +52,7 @@ M.misc = {
     ellipsis = '…',
     git = '',
     vertical_bar = '│',
+    vertical_bar_thick = '┃',
 }
 
 return M

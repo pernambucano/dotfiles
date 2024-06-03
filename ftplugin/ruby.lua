@@ -8,4 +8,4 @@ vim.api.nvim_create_autocmd({ 'BufAdd', 'BufCreate', 'BufEnter' }, {
   end,
 })
 
-vim.cmd 'compiler ruby'
+vim.cmd 'compiler minitest'

@@ -1,7 +1,7 @@
 if exists('current_compiler')
   finish
 endif
-let current_compiler = 'ruby'
+let current_compiler = 'rspec'
 
 CompilerSet makeprg=bin/rspec
 

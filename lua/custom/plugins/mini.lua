@@ -17,6 +17,7 @@ return {
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
+      require('mini.files').setup({})
       -- require('mini.jump2d').setup({ keys = 'etovxqpdygfblzhckisuran' })
 
       -- Simple and easy statusline.
